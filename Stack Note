@@ -1,0 +1,72 @@
+#include <iostream>
+#include <malloc.h>
+using namespace std;
+
+template <class Type> class Stack{
+ private:
+    Type *stk;
+    int top=-1;
+    int MAXN;
+    public:
+    Stack(int size){MAXN=size;stk=new Type[MAXN];}
+    ~Stack(){delete []stk;}
+    int push(Type x)
+    {
+        if(top>=MAXN-1)return 1;
+        stk[++top]=x;
+        return 0;
+    }
+    int pop(Type* px)
+    {
+        if(top==-1)return 1;
+        *px=stk[top--];
+        return 0;
+    }
+    Type* getTop()
+    {
+        if(top==-1)return NULL;
+        return stk[top];
+    }
+    int isEmpty()const{
+        return top==-1;
+    }
+    int isFull()const{
+        return top==MAXN-1;
+    }
+};
+template <class Type> struct Node{
+    Type data;
+    struct Node *link;
+};
+typedef Node<int> NODE;
+
+template <class Type> class LStack{
+    private:
+    NODE *top;
+    public:
+    LStack(){top=NULL;}
+    void push(Type x)
+    {
+        NODE *p;
+        p=(NODE *)malloc(sizeof(NODE));
+        p->data=x;
+        p->link=top;
+        top=p;
+    }
+    int pop(Type *x){
+        NODE *p;
+        if(top==NULL)return 1;
+        else
+            *x=top->data;
+        p=top;
+        top=top->link;
+        free(p);
+        return 0;
+    }
+};
+
+int main()
+{
+    cout<<"Hello World!"<<endl;
+      return 0;
+}
